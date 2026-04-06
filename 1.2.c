@@ -21,10 +21,10 @@ La carga de pedidos finaliza cuando se ingresa un producto igual a 0*/
 
 void ingresaCodigos(int [], int []);
 int leeyvalida (int , int);
-void norepite(int [], int);
-void pedidos(int [], int []);
-int valCant (int);
-int validaCodigo (int , int []);
+void norepite(int , int [], int);
+void ingresoPedidos(int [], int []);
+int mayorquecero (int);
+int buscayvalidaCodigo (int , int []);
 void informeA (int [], int []);
 int maximo (int [], int []);
 void informeB (int [], int, int []);
@@ -34,7 +34,7 @@ void informeC(int [], int, int []);
 int main (){
     int vCod [TAM], vProd[TAM]={0};
     ingresaCodigos(vCod, vProd);
-    pedidos(vCod, vProd);
+    ingresaPedidos(vCod, vProd);
     informeA(vCod, vProd);
     int max= maximo(vCod, vProd);
     informeB(vCod, max, vProd);
@@ -45,13 +45,19 @@ int main (){
 }
 
 void ingresaCodigos (int vCod[], int vProd[]){
-    int i;
+    int i, aux;
 
     for (i=0; i<TAM; i++)
     {
         printf("Ingrese codigo de producto %d (4 cifras):", i+1);
-        vCod[i]= leeyvalida(1000, 9999);
-        norepite(vCod, i);
+        aux= leeyvalida(1000, 9999);
+        while (!norepite(aux, vCod, i))
+        {
+            vCod[i]=aux;
+        }
+        
+        
+        
     }
 }
 
@@ -66,7 +72,7 @@ int leeyvalida (int li, int ls){ // valida entre 2 numeros
     return dato;
 }
 
-void norepite (int vCod[], int i){
+void norepite (int aux, int vCod[], int i){
     int flag=0, j;
     for(j=0; j<i; j++){ // se busca hasta i-1, para que no arroje el mismo valor
         if (vCod[j]==vCod[i])
@@ -84,17 +90,17 @@ void norepite (int vCod[], int i){
     }
 }
 
-void pedidos(int vCod[], int vProd[]){
+void ingresoPedidos(int vCod[], int vProd[]){
     int codPedido, pos, cant;
     printf("Ingresar codigo para realizar pedido (0 para finalizar):");
     scanf("%d", &codPedido);
     while (codPedido!=0){
-    pos= validaCodigo(codPedido, vCod);
+    pos= buscayvalidaCodigo(codPedido, vCod);
     if (pos==-1){
         printf("El codigo no existe.\n");
         }else{
         printf("Ingrese la cantidad del producto(%d):", codPedido);
-        cant = valCant(0);
+        cant = mayorquecero(0);
         vProd[pos]= vProd[pos] + cant;
         }
     printf("Ingresar codigo para realizar pedido (0 para finalizar):");
@@ -103,7 +109,7 @@ void pedidos(int vCod[], int vProd[]){
     printf("Carga de productos finalizada.");
 }
 
-int valCant (int lim){
+int mayorquecero (int lim){
     int dato;
     scanf("%d", &dato);
     while (dato<=0)
@@ -114,7 +120,7 @@ int valCant (int lim){
     return dato;
 }
 
-int validaCodigo (int codPedido, int vCod []){
+int buscayvalidaCodigo (int codPedido, int vCod []){
     int flag=0, j;
     int rt=-1;
 
