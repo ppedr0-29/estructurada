@@ -6,7 +6,7 @@ por columna en otro vector.*/
 
 #include <stdio.h>
 
-void ingresarMatriz(int [5][4], int , int);
+void ingresarMatriz(int [][4], int , int);
 void sumafilaM(int [][4], int , int , int []);
 void MostrarVecF(int [], int);
 void sumacolM(int [][4], int , int , int []);
@@ -25,7 +25,7 @@ int main(){
 
 }
 
-void ingresarMatriz(int m[5][4], int f, int c){
+void ingresarMatriz(int m[][4], int f, int c){
     for (int i = 0; i < f; i++)
     {
         for (int j = 0; j < c; j++)
@@ -38,7 +38,7 @@ void ingresarMatriz(int m[5][4], int f, int c){
     
 }
 
-void sumafilaM(int m[5][4], int f, int c, int vf[]){
+void sumafilaM(int m[][4], int f, int c, int vf[]){
     int suma;
     for (int i = 0; i < f; i++)
     {
@@ -59,7 +59,7 @@ void MostrarVecF(int vf[],int f){
     }
 }
 
-void sumacolM(int m[5][4], int f, int c, int vc[]){
+void sumacolM(int m[][4], int f, int c, int vc[]){
     int suma;
     for (int j = 0; j < c; j++)
     {

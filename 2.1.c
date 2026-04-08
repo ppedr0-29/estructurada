@@ -19,6 +19,7 @@ int main (){
     mostrarResultado(mN, 3, 3);
 
 }
+
 void ingresoMatriz(int m[][3], int cf, int cc){
     int f, c;
     for (f=0; f < cf; f++)
@@ -52,7 +53,7 @@ void producto(int m[][3], int mN[][3], int cf, int cc, int entero){
 void mostrarResultado(int mN[][3], int cf, int cc ){
     for (int i = 0; i < cf; i++)
     {
-        for (int j = 0; j <cc; j++)
+        for (int j = 0; j < cc; j++)
         {
             printf("%4d", mN[i][j]);
         }
