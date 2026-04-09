@@ -12,26 +12,36 @@ b. El número de agencia que obtuvo la máxima cantidad de pasajes vendidos. (pu
 
 #include <stdio.h>
 
-void ingresoMatriz(int [][15], int, int);
+int ingresoMatriz(int [][15], int, int);
 int IngrDatoValRango(int , int);
 int ingrDatoVal(int);
-void mostrarMatriz(int [][15], int, int);
+void mostrarMatrizA(int [][15], int, int);
+void sumacolM(int [][15], int , int , int []);
+int Maximo(int [], int );
+void mostrarMatrizB(int [], int , int );
 
 
 int main (){
     int m[10][15]= {{0}};
-    ingresoMatriz(m, 10, 15);
-    mostrarMatriz(m, 10, 15);
-
+    int maximo;
+    int vc[15]={0};
+    if(ingresoMatriz(m,10,15)){
+    mostrarMatrizA(m, 10, 15);
+    sumacolM(m, 10, 15, vc);
+    maximo= Maximo(vc, 15);
+    mostrarMatrizB(vc, 15, maximo);
+    }
 }
 
-void ingresoMatriz(int m[][15], int f, int c){
+int ingresoMatriz(int m[][15], int f, int c){
     printf("Ingrese cantidad(entre 0 y 20):");
     int cant= IngrDatoValRango(0,20);
     int agencia, tour;
+    int seCargo=0;
 
     while (cant!=0)
-    {
+    {   
+        seCargo=1;
         printf("Ingrese tour (entre 1 a 10):");
         tour=IngrDatoValRango(1,10);
         printf("Ingrese agencia (entre 1 a 15):");
@@ -41,6 +51,7 @@ void ingresoMatriz(int m[][15], int f, int c){
         cant= IngrDatoValRango(0,20);
     }
     printf("Ingreso finalizado.");
+    return seCargo;
 }
 
 
@@ -64,9 +75,9 @@ int ingrDatoVal(int lim){
     return dato;
 }
 
-void mostrarMatriz(int m[][15], int f, int c){
-    printf("\n-- PASAJES POR TOUR Y AGENCIA --\n");
-    printf("        ");
+void mostrarMatrizA(int m[][15], int f, int c){
+    printf("\n--PASAJES POR TOUR Y AGENCIA--\n");
+    printf("// - //  ");
     for(int j = 0; j < c; j++){
         printf("Ag%-4d", j+1);
     }
@@ -77,5 +88,36 @@ void mostrarMatriz(int m[][15], int f, int c){
             printf("%-6d", m[i][j]);
         }
         printf("\n");
+    }
+}
+
+void sumacolM(int m[][15], int f, int c, int vc[]){
+    int suma;
+    for (int j = 0; j < c; j++)
+    {
+        suma=0;
+        for (int i = 0; i<f; i++)
+        {
+            suma += m[i][j];
+        }
+        vc[j]=suma;
+    }
+}
+
+int Maximo(int vc[], int c){
+    int max = vc[0];
+    for(int i = 0; i < c; i++){
+        if(vc[i] > max){
+            max = vc[i];
+        }
+    }
+    return max;
+}
+
+void mostrarMatrizB(int vc[], int c, int max){
+    for(int i = 0; i < c; i++){
+        if(vc[i] == max){
+            printf("La agencia que tuvo la mayor cantidad vendida es %d\n", i+1);
+        }
     }
 }
