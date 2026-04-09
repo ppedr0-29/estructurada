@@ -65,13 +65,13 @@ void repite(int m[][8], int f, int c, int max){
         {
             if(m[i][j]==max){
                 cantp++;
-                printf("\nSe encuentra en la fila %d y la columna %d", i, j);
+                printf("\nEl maximo se encuentra en la fila %d y la columna %d", i, j);
             }
         }
 }
     if(cantp==1){
     printf("\nNo se repite el maximo.");
         }else{
-    printf("\nSe repite %d", cantp);
+    printf("\nSe repite %d veces", cantp);
     }
 }
