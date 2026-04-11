@@ -117,3 +117,18 @@ int leeyvalidafila(int min, int max){
     }
     return dato;
 }
+
+void informeA(char m[][9], int f, int c){
+int disponibles = 0, reservadas = 0;
+for(int i = 0; i < f; i++){
+    for(int j = 0; j < c; j++){
+        if(m[i][j] == 'D'){
+            disponibles++;
+        } else {
+            reservadas++;
+        }
+    }
+}
+printf("Disponibles: %d\n", disponibles);
+printf("Reservadas: %d\n", reservadas);
+}
