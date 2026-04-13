@@ -21,20 +21,34 @@ Butaca Cantidad
 ..............*/
 
 #include <stdio.h> 
+#define CANT_FILAS 12
+#define CANT_COLUMNAS 9
 
 void mostrarMatriz(char [][9], int , int, int []);
 void iniciarM(char [][9], int , int );
 int IngrDatoValRango(int, int);
-void ingresoReserva(char [][9], int, int, int []);
+void ingresoReserva(char [][9], int []);
 int leeyvalidafila(int, int);
 int buscarColumna(int [], int, int);
+int leeyvalidafila(int , int );
+void informeA(char [][9], int , int );
+void informeB(char [][9], int , int );
+void informeC (char  [][9], int , int , int []);
+int Maximo(int [], int );
+void informeD (char [][9], int , int , int []);
 
 int main (){
     char m[12][9];
     int orden[9] = {8, 6, 4, 2, 1, 3, 5, 7, 9}; //orden de columnas como se pide, vector y asigno valores en [i]
+    int filas[CANT_FILAS]={0};
+    int columnas[CANT_COLUMNAS]={0};
     iniciarM(m, 12,9);
     mostrarMatriz(m,12,9, orden);
-    ingresoReserva(m,12,9,orden);
+    ingresoReserva(m,orden);
+    informeA(m,12,9);
+    informeB(m,12,9);
+    informeC(m,12,9,filas);
+    informeD ( m,  12,  9, columnas);
 }
 
 void iniciarM(char m[][9], int f, int c){ //forma de inicializar un char
@@ -72,7 +86,7 @@ int IngrDatoValRango(int min, int max ){
 }
 
 
-void ingresoReserva(char m[][9], int f, int c, int orden []){
+void ingresoReserva(char m[][9], int orden []){
     printf("Ingrese numero de fila entre 1 y 12:(menor a 0 para finalizar):");
     int fila= leeyvalidafila(0,12);
     int butaca;
@@ -92,7 +106,7 @@ void ingresoReserva(char m[][9], int f, int c, int orden []){
         printf("Ingrese numero de fila entre 1 y 12:(menor a 0 para finalizar):");
         fila= leeyvalidafila(0,12);
         }
-    printf("Ingreso finalizado.");
+    printf("Ingreso finalizado.\n");
     }
 
 int buscarColumna(int orden [], int c, int butaca){
@@ -131,4 +145,71 @@ for(int i = 0; i < f; i++){
 }
 printf("Disponibles: %d\n", disponibles);
 printf("Reservadas: %d\n", reservadas);
+}
+
+void informeB(char m[][9], int f, int c){
+    int vacia;
+    for (int i = 0; i < f; i++)
+    {   vacia=1;
+        for (int j = 0; j < c; j++)
+        {
+            if (m[i][j]=='R')
+            {
+                vacia=0;
+            }
+        }
+        if (vacia==1)
+            {
+                printf("Fila %d vacia.\n", i+1);
+            }
+    }
+}
+
+void informeC (char m [][9], int f, int c, int v[]){
+    int suma;
+    for(int i=0; i<f; i++){
+        suma =0;
+        for (int j = 0; j < c; j++)
+        {
+            if(m[i][j]=='R')
+                suma++;
+        }
+        v[i]=suma;
+    }
+    int maximo = Maximo(v, f);
+    for(int i=0;i<f;i++){
+        if (v[i]==maximo)
+        {
+            printf("La/s fila %d tiene la mayor cantidad de espectadores\n", i+1);
+        }
+    }
+}
+
+int Maximo(int vc[], int c){
+    int max = vc[0];
+    for(int i = 0; i < c; i++){
+        if(vc[i] > max){
+            max = vc[i];
+        }
+    }
+    return max;
+}
+
+void informeD (char m [][9], int f, int c, int v[]){
+    int suma;
+    for(int i=0; i<c; i++){
+        suma =0;
+        for (int j = 0; j < f; j++)
+        {
+            if(m[j][i]=='R')
+                suma++;
+        }
+        v[i]=suma;
+    }
+    printf("--Listado por butaca--\n");
+    for (int i = 0; i < c; i++)
+    {
+        printf("%d\t %d\n", i+1, v[i]);
+    }
+    
 }
