@@ -151,3 +151,26 @@ int buscarPosicion(int vec[], int ce, int dato){
     }
     return pos;
 }
+
+//ordena de menor a mayor un vector 
+void burbujeomaM (int V[], int ce)
+{
+    int AUX, j, cota = ce - 1;
+    int desordenado = 1;
+
+    while (desordenado)
+    {
+        desordenado = 0;
+        for (j = 0; j < cota; j++)
+        {
+            if (V[j] > V[j + 1])
+            {
+                AUX = V[j];
+                V[j] = V[j + 1];
+                V[j + 1] = AUX;
+                desordenado = j;
+            }
+        }
+        cota = desordenado;
+    }
+}

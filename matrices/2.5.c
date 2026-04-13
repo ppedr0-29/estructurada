@@ -35,7 +35,8 @@ void informeA(char [][9], int , int );
 void informeB(char [][9], int , int );
 void informeC (char  [][9], int , int , int []);
 int Maximo(int [], int );
-void informeD (char [][9], int , int , int []);
+void informeD (char [][9], int , int , int [], int []);
+void burbujeomaM (int [], int , int []);
 
 int main (){
     char m[12][9];
@@ -48,7 +49,7 @@ int main (){
     informeA(m,12,9);
     informeB(m,12,9);
     informeC(m,12,9,filas);
-    informeD ( m,  12,  9, columnas);
+    informeD ( m,  12,  9, columnas, orden);
 }
 
 void iniciarM(char m[][9], int f, int c){ //forma de inicializar un char
@@ -109,7 +110,7 @@ void ingresoReserva(char m[][9], int orden []){
     printf("Ingreso finalizado.\n");
     }
 
-int buscarColumna(int orden [], int c, int butaca){
+/*int buscarColumna(int orden [], int c, int butaca){
     int columna;
     for (int i = 0; i < c; i++)
         {
@@ -119,7 +120,21 @@ int buscarColumna(int orden [], int c, int butaca){
             }
         }
     return columna;
+}*/
+int buscarColumna(int orden [], int c, int butaca){
+    int columna;
+    int flag=0;
+    int i=0;
+    while (flag==0 && i<c){
+        if(orden[i]==butaca){
+            columna=i;
+            flag=1;
+        }
+        i++;
+    }
+    return columna;
 }
+
 
 int leeyvalidafila(int min, int max){
     int dato;
@@ -195,7 +210,7 @@ int Maximo(int vc[], int c){
     return max;
 }
 
-void informeD (char m [][9], int f, int c, int v[]){
+void informeD (char m [][9], int f, int c, int v[], int orden[]){
     int suma;
     for(int i=0; i<c; i++){
         suma =0;
@@ -206,10 +221,37 @@ void informeD (char m [][9], int f, int c, int v[]){
         }
         v[i]=suma;
     }
+    burbujeomaM(v,c,orden);
     printf("--Listado por butaca--\n");
-    for (int i = 0; i < c; i++)
+    for (int i = c-1; i >= 0; i--)
     {
-        printf("%d\t %d\n", i+1, v[i]);
+        printf("%d\t %d\n", orden[i], v[i]);
     }
     
+}
+
+
+void burbujeomaM (int V[], int ce, int orden[])
+{
+    int AUX, j, cota = ce - 1;
+    int desordenado = 1;
+
+    while (desordenado)
+    {
+        desordenado = 0;
+        for (j = 0; j < cota; j++)
+        {
+            if (V[j] > V[j + 1])
+            {
+                AUX = V[j];
+                V[j] = V[j + 1];
+                V[j + 1] = AUX;
+                desordenado = j;
+                AUX = orden[j];
+                orden[j]= orden[j+1];
+                orden[j+1]=AUX;
+            }
+        }
+        cota = desordenado;
+    }
 }
