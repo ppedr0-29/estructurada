@@ -14,40 +14,38 @@ b. Mostrar el listado de alumnos ordenado alfabéticamente de menor a mayor.*/
 int ingresaDatos(char [][LARGO_NOMBRE], int []);
 void leerTexto(char [], int);
 int leeyValidaIntEntre2(int, int);
+int busquedaSecuencial(char [][LARGO_NOMBRE], char [], int );
+void mostrarDNI(char [], int , char [][LARGO_NOMBRE], int []);
+void validarVacio(char [], int );
+void burbujeo(char [][LARGO_NOMBRE], int [],int );
+void mostrarListado(char [][LARGO_NOMBRE], int [], int);
 
 int main(){
     char nombre[TAM][LARGO_NOMBRE], nombre2[LARGO_NOMBRE];
-    int dni[TAM];
+    int dni[TAM]; //preguntar al profesor como es el tipo de dato para DNI
     int cant;
-    int pos;
     cant=ingresaDatos(nombre, dni);
-    printf("Ingrese nombre a buscar:");
-    leerTexto(nombre2, LARGO_NOMBRE);
-    while (strcmpi(nombre2, "NOBUSCARMAS") !=0)
-    {
-        pos= busquedaSecuencial(nombre, nombre2, cant);
-    }
-    
+    printf("--BUSQUEDA DE ALUMNOS--\n");
+    mostrarDNI( nombre2, cant, nombre, dni);
+    mostrarListado(nombre, dni, cant);
 }
 
 int ingresaDatos(char nombre[][LARGO_NOMBRE], int dni[]){
     int i=0;
+    char nombreAux[LARGO_NOMBRE];
     printf("Ingrese nombre del alumno %d:", i+1);
-    leerTexto(nombre[i], LARGO_NOMBRE);
-    while (strcmpi(nombre[i], "FIN") !=0 && i<TAM)
+    leerTexto(nombreAux, LARGO_NOMBRE);
+    validarVacio(nombreAux, LARGO_NOMBRE);
+    while (strcmpi(nombreAux, "FIN") !=0 && i<TAM)
     {
-        while (strlen(nombre[i])==0)
-            {
-            printf("El nombre no puede ser vacio. Ingrese nuevamente:");
-            leerTexto(nombre[i], LARGO_NOMBRE);
-        }
+        strcpy(nombre[i], nombreAux);
         printf("Ingrese DNI del alumno %d:", i+1);
         dni[i]=leeyValidaIntEntre2(1000000, 99999999);
         i++;
         printf("Ingrese nombre del alumno %d:", i+1);
-        leerTexto(nombre[i], LARGO_NOMBRE);
+        leerTexto(nombreAux, LARGO_NOMBRE);
+        validarVacio(nombreAux, LARGO_NOMBRE);
     }
-    printf("El programa finalizo.");
     return i;
 }
 
@@ -90,12 +88,67 @@ int busquedaSecuencial(char nombre[][LARGO_NOMBRE], char nombre2[], int cant){
 return pos;
 }
 
-void mostrarDNI(char nombre2[], int pos, int cant, char nombre[][LARGO_NOMBRE]){
+void mostrarDNI(char nombre2[], int cant, char nombre[][LARGO_NOMBRE], int dni[]){
+    int pos;
     printf("Ingrese nombre a buscar:");
     leerTexto(nombre2, LARGO_NOMBRE);
+    //validarVacio(nombre2, LARGO_NOMBRE);
     while (strcmpi(nombre2, "NOBUSCARMAS") !=0)
     {
         pos= busquedaSecuencial(nombre, nombre2, cant);
+        if (pos!=-1)
+        {
+            printf("DNI %d correspondiente al alumno %s\n", dni[pos], nombre2);
+        }else{
+            printf("El alumno %s no fue encontrado.\n", nombre2);
+        }
+        printf("Ingrese nombre a buscar:");
+        leerTexto(nombre2, LARGO_NOMBRE);
     }
-    printf("Carga finalizada.");
+    printf("\nCarga finalizada.\n");
+}
+
+void burbujeo(char nombre[][LARGO_NOMBRE], int dni[],int ce)//ordenar alfabeticamente
+{
+    char AUX[TAM];
+    int dniAux;
+    int j, cota = ce - 1;
+    int desordenado = 1;
+
+    while (desordenado)
+    {
+        desordenado = 0;
+        for (j = 0; j < cota; j++)
+        {
+            if (strcmpi(nombre[j], nombre[j + 1]) > 0)
+            {
+                strcpy(AUX, nombre[j]);
+                strcpy(nombre[j], nombre[j + 1]);
+                strcpy(nombre[j + 1], AUX);
+                dniAux=dni[j];
+                dni[j]=dni[j+1];
+                dni[j+1]=dniAux;
+                desordenado = j;
+            }
+        }
+        cota = desordenado;
+    }
+}
+
+void mostrarListado(char nombre[][LARGO_NOMBRE], int dni[], int cant){
+    burbujeo(nombre, dni, cant);
+    printf("---LISTADO DE ALUMNOS(A-Z)---");
+    for (int i = 0; i < cant; i++)
+    {
+        printf("\n%s", nombre[i]);
+    }
+    
+}
+
+void validarVacio(char texto[], int largo){
+    while (strlen(texto)==0)
+        {
+            printf("El texto no puede estar vacio. Ingrese nuevamente:");
+            leerTexto(texto, largo);
+        }
 }

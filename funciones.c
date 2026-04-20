@@ -174,3 +174,40 @@ void burbujeomaM (int V[], int ce)
         cota = desordenado;
     }
 }
+
+void burbujeo(char V[][TAM], int ce)
+{
+    char AUX[TAM];
+    int j, cota = ce - 1;
+    int desordenado = 1;
+
+    while (desordenado)
+    {
+        desordenado = 0;
+        for (j = 0; j < cota; j++)
+        {
+            if (strcmpi(V[j], V[j + 1]) > 0)
+            {
+                strcpy(AUX, V[j]);
+                strcpy(V[j], V[j + 1]);
+                strcpy(V[j + 1], AUX);
+                desordenado = j;
+            }
+        }
+        cota = desordenado;
+    }
+
+void leerTexto (char texto[], int largo){
+    int i;
+    fgets(texto, largo, stdin);
+    i=0;
+    while (texto[i]!='\0')
+    {
+        if (texto[i]=='\n')
+        {
+            texto[i]='\0';
+        }else
+        i++;
+    }
+    
+}
