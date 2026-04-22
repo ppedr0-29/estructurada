@@ -32,13 +32,14 @@ typedef struct {
 int ingresarProductos(Productos productos[]);
 void leerTexto(char[], int);
 void validarVacio(char[], int);
-int ventasMes(Productos productos[], int cantProductos);
+void ventasMes(Productos productos[], int cantProductos, int pos);
 
 int main() {
     Productos productos[TAM];
-    int cantProductos;
+    int cantProductos, pos;
     cantProductos = ingresarProductos(productos);
     
+
     return 0;
 }
 
@@ -93,8 +94,6 @@ int ingresarProductos(Productos productos[]) {
             while (getchar() != '\n');
         }
         productos[i].totalVendido=totalVendidoAux;
-        
-        
         i++;
         printf("Ingrese descripcion del producto %d (FIN para terminar): ", i + 1);
         leerTexto(descripcionAux, 31);
@@ -104,23 +103,50 @@ int ingresarProductos(Productos productos[]) {
     return i;
 }
 
-int ventasMes(Productos productos[], int cantProductos){
-    int i=0, cantidadPedida;
+void ventasMes(Productos productos[], int cantProductos, int pos){
+    int i=0, cantidadPedida, totalProducto;
+    char codigo2[6], codigo2Aux[6];
     printf("--VENTAS DEL MES--\n");
-    printf("Ingrese la cantidad pedida del producto:");
+    printf("Ingrese la cantidad pedida del producto %d:", i+1);
     cantidadPedida=leeyValidaInt(0);
-    while (cantidadPedida!=0)
-    {
-        printf("Ingrese codigo del producto:");
+    while (cantidadPedida!=0){
+        printf("Ingrese codigo de producto %d (5 cifras): ", i + 1);
+        leerTexto(codigo2Aux, 6);
+        validarVacio(codigo2Aux, 6);
+        
+        while (strlen(codigo2Aux) != 5) {
+            printf("Codigo invalido. Ingrese nuevamente: ");
+            leerTexto(codigo2Aux, 6);
+        }
+        strcpy(codigo2, codigo2Aux);
+        pos=busquedaSecuencial(productos, cantProductos, codigo2);
+        while (pos==-1)
+        {
+            printf("El codigo no existe. Ingrese nuevamente:");
+            leerTexto(codigo2Aux, 6);
+            while (strlen(codigo2Aux) != 5) {
+            printf("Codigo invalido. Ingrese nuevamente: ");
+            leerTexto(codigo2Aux, 6);
+        }
+            strcpy(codigo2, codigo2Aux);
+            pos=busquedaSecuencial(productos, cantProductos, codigo2);
+        }
+        totalProducto = productos[pos].precio * cantidadPedida;
+        productos[pos].totalVendido += totalProducto;
+        productos[pos].cantVendidas += cantidadPedida; 
+        i++;
+        printf("Ingrese la cantidad pedida del producto %d:", i+1);
+        cantidadPedida=leeyValidaInt(0);
     }
     
+    printf("-INGRESO VENTAS FINALIZADO-");
 }
 
-int busquedaSecuencial(Productos productos [], int cantProductos){
+int busquedaSecuencial(Productos productos [], int cantProductos, char codigo2[]){
     int i=0, pos=-1;
     while (pos==-1 && i<cantProductos){
-        if (strcmpi(nombre[i], codigo)==0){
-        pos =i;
+        if (strcmpi(productos[i].codigo, codigo2)==0){
+        pos=i;
         }else{
             i++;
         }
