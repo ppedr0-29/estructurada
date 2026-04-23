@@ -32,14 +32,22 @@ typedef struct {
 int ingresarProductos(Productos productos[]);
 void leerTexto(char[], int);
 void validarVacio(char[], int);
-void ventasMes(Productos productos[], int cantProductos, int pos);
+void ventasMes(Productos productos[], int);
+void mostrarLista(Productos productos[], int );
+int busquedaSecuencial(Productos productos [], int , char []);
+int leeyValidaInt(int);
 
 int main() {
     Productos productos[TAM];
-    int cantProductos, pos;
+    int cantProductos;
     cantProductos = ingresarProductos(productos);
-    
-
+    if (cantProductos==0)
+    {
+        printf("No se ingresaron productos.");
+    }else{
+    ventasMes(productos, cantProductos);
+    mostrarLista(productos, cantProductos);
+    }
     return 0;
 }
 
@@ -99,13 +107,13 @@ int ingresarProductos(Productos productos[]) {
         leerTexto(descripcionAux, 31);
         validarVacio(descripcionAux, 31);
     }
-    printf("Programa finalizado.");
+    printf("--CARGA DE PRODUCTOS FINALIZADA--\n");
     return i;
 }
 
-void ventasMes(Productos productos[], int cantProductos, int pos){
-    int i=0, cantidadPedida, totalProducto;
-    char codigo2[6], codigo2Aux[6];
+void ventasMes(Productos productos[], int cantProductos){
+    int i=0, cantidadPedida, totalProducto, pos;
+    char codigo2[6], codigo2Aux[10];
     printf("--VENTAS DEL MES--\n");
     printf("Ingrese la cantidad pedida del producto %d:", i+1);
     cantidadPedida=leeyValidaInt(0);
@@ -139,7 +147,16 @@ void ventasMes(Productos productos[], int cantProductos, int pos){
         cantidadPedida=leeyValidaInt(0);
     }
     
-    printf("-INGRESO VENTAS FINALIZADO-");
+    printf("--INGRESO VENTAS FINALIZADO--\n");
+}
+
+void mostrarLista(Productos productos[], int cantProductos){
+    printf("DESCRIPCION\t CANT.UNIDADE VENDIDAS\t IMPORTE TOTAL VENDIDO\n");
+    for (int i = 0; i < cantProductos; i++)
+    {   
+        printf("%-30s\t %20d\t $%20.2f\n ", productos[i].descripcion, productos[i].cantVendidas, productos[i].totalVendido);
+    }
+    
 }
 
 int busquedaSecuencial(Productos productos [], int cantProductos, char codigo2[]){
