@@ -171,6 +171,8 @@ int busquedaSecuencial(Productos productos [], int cantProductos, char codigo2[]
 return pos;
 }
 
+
+
 void leerTexto(char texto[], int largo) {
     int i;
     fgets(texto, largo, stdin); 
