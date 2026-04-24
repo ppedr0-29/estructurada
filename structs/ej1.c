@@ -54,7 +54,7 @@ int main() {
 int ingresarProductos(Productos productos[]) {
     int i = 0;
     int cantVendidasAux;
-    char descripcionAux[31], codigoAux[6];
+    char descripcionAux[31], codigoAux[10];
     float precioAux, totalVendidoAux;
     printf("Ingrese descripcion del producto %d (FIN para terminar): ", i + 1);
     leerTexto(descripcionAux, 31);
@@ -64,12 +64,12 @@ int ingresarProductos(Productos productos[]) {
         strcpy(productos[i].descripcion, descripcionAux);
         
         printf("Ingrese codigo de producto %d (5 cifras): ", i + 1);
-        leerTexto(codigoAux, 6);
-        validarVacio(codigoAux, 6);
+        leerTexto(codigoAux, 10);
+        validarVacio(codigoAux, 10);
         
         while (strlen(codigoAux) != 5) {
             printf("Codigo invalido. Ingrese nuevamente: ");
-            leerTexto(codigoAux, 6);
+            leerTexto(codigoAux, 10);
         }
         strcpy(productos[i].codigo, codigoAux);
         printf("Ingrese precio del producto %d:", i+1);
@@ -119,22 +119,22 @@ void ventasMes(Productos productos[], int cantProductos){
     cantidadPedida=leeyValidaInt(0);
     while (cantidadPedida!=0){
         printf("Ingrese codigo de producto %d (5 cifras): ", i + 1);
-        leerTexto(codigo2Aux, 6);
-        validarVacio(codigo2Aux, 6);
+        leerTexto(codigo2Aux, 10);
+        validarVacio(codigo2Aux, 10);
         
         while (strlen(codigo2Aux) != 5) {
             printf("Codigo invalido. Ingrese nuevamente: ");
-            leerTexto(codigo2Aux, 6);
+            leerTexto(codigo2Aux, 10);
         }
         strcpy(codigo2, codigo2Aux);
         pos=busquedaSecuencial(productos, cantProductos, codigo2);
         while (pos==-1)
         {
             printf("El codigo no existe. Ingrese nuevamente:");
-            leerTexto(codigo2Aux, 6);
+            leerTexto(codigo2Aux, 10);
             while (strlen(codigo2Aux) != 5) {
             printf("Codigo invalido. Ingrese nuevamente: ");
-            leerTexto(codigo2Aux, 6);
+            leerTexto(codigo2Aux, 10);
         }
             strcpy(codigo2, codigo2Aux);
             pos=busquedaSecuencial(productos, cantProductos, codigo2);
@@ -151,10 +151,10 @@ void ventasMes(Productos productos[], int cantProductos){
 }
 
 void mostrarLista(Productos productos[], int cantProductos){
-    printf("DESCRIPCION\t CANT.UNIDADES VENDIDAS\t IMPORTE TOTAL VENDIDO\n");
+    printf("\n%-31s  %-22s  %20s    ", "DESCRIPCION", "CANT.UNIDADES VENDIDAS", "IMPORTE TOTAL VENDIDO");
     for (int i = 0; i < cantProductos; i++)
     {   
-        printf("%-30s\t %20d\t $%20.2f\n ", productos[i].descripcion, productos[i].cantVendidas, productos[i].totalVendido);
+        printf("\n%-31s  %-22d  $%20.2f\n ", productos[i].descripcion, productos[i].cantVendidas, productos[i].totalVendido);
     }
     
 }
