@@ -113,7 +113,7 @@ int ingresarProductos(Productos productos[]) {
 
 void ventasMes(Productos productos[], int cantProductos){
     int i=0, cantidadPedida, totalProducto, pos;
-    char codigo2[6], codigo2Aux[10];
+    char codigo2[10], codigo2Aux[10];
     printf("--VENTAS DEL MES--\n");
     printf("Ingrese la cantidad pedida del producto %d:", i+1);
     cantidadPedida=leeyValidaInt(0);
@@ -151,7 +151,7 @@ void ventasMes(Productos productos[], int cantProductos){
 }
 
 void mostrarLista(Productos productos[], int cantProductos){
-    printf("DESCRIPCION\t CANT.UNIDADE VENDIDAS\t IMPORTE TOTAL VENDIDO\n");
+    printf("DESCRIPCION\t CANT.UNIDADES VENDIDAS\t IMPORTE TOTAL VENDIDO\n");
     for (int i = 0; i < cantProductos; i++)
     {   
         printf("%-30s\t %20d\t $%20.2f\n ", productos[i].descripcion, productos[i].cantVendidas, productos[i].totalVendido);
