@@ -8,13 +8,13 @@ Se solicita:
 Declarar un tipo de dato que contenga la información del medicamento. READY
 Declarar un vector de estructura de tipo de datos creado en punto 1. READY
 Cargar en un sector de estructuras, los datos referentes a los medicamentos. Función INGRESO. READY
-Consultar el precio según código del medicamento. Función BUSQUEDA_MEDI. 
-Informar los códigos de los medicamentos cuyo stock es inferior a 10 unidades. Función INFORME.*/
+Consultar el precio según código del medicamento. Función BUSQUEDA_MEDI. READY
+Informar los códigos de los medicamentos cuyo stock es inferior a 10 unidades. Función INFORME. READY */ 
 
 #include <stdio.h>
 #include <string.h>
 
-#define TAM 2
+#define TAM 50
 
 typedef struct
 {
