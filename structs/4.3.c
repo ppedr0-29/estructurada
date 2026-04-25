@@ -33,31 +33,42 @@ int leeyValidaIntEntre2DNI(int , int );
 int leeyValidaIntEntre2Notas(int , int );
 void leerTexto(char [], int );
 void validarVacio(char [], int );
+void RESULTADO(ALUMNOS [], int );
+void INFORME_PROMO(ALUMNOS [], int);
 
 int main(){
     ALUMNOS informacion[TAM];
-    INGRESO(informacion, TAM);
+    int cantAlumnos;
+    cantAlumnos= INGRESO(informacion, TAM);
+    RESULTADO(informacion, cantAlumnos);
+    INFORME_PROMO( informacion, cantAlumnos);
+
     return 0;
 }
 
 int INGRESO(ALUMNOS informacion[], int ce){
-    int i;
-    for (i = 0; i < ce; i++)
-    {   
-        informacion[i]=ingreso();
-        if (informacion[i].dniAlu==0)
+    ALUMNOS aux;
+    int i=0, flag=0;
+    while (flag==0 && i<ce)
+    {
+        aux=ingreso();
+        if (aux.dniAlu!=0)
         {
-
+            informacion[i]=aux;
+            i++;
+        }else{
+            flag=1;
         }
     }
     return i;
 }
 
+
 ALUMNOS ingreso(){
     ALUMNOS datos;
     printf("Ingrese DNI del alumno(0 finalizar):");
     datos.dniAlu=leeyValidaIntEntre2DNI(1000000, 99999999);
-    while (datos.dniAlu!=0)
+    if (datos.dniAlu!=0)
     {
         printf("Ingrese apellido y nombre:");
         leerTexto(datos.apellidoyNombreAlu, TAM);
@@ -66,15 +77,48 @@ ALUMNOS ingreso(){
         datos.nota1=leeyValidaIntEntre2Notas(0,10);
         printf("Ingrese nota 2 del alumno:");
         datos.nota2=leeyValidaIntEntre2Notas(0,10);
-        printf("Ingrese DNI del alumno(0 finalizar):");
-        datos.dniAlu=leeyValidaIntEntre2DNI(1000000, 99999999);
+        datos.promedioNotas= (float)(datos.nota1 + datos.nota2) / 2;
+    }else{
+        printf("--CARGA FINALIZADA.--\n");
     }
-    printf("Carga de informacion finalizada.");
 
     return datos;
 }
 
-int leeyValidaIntEntre2(int min, int max){
+void RESULTADO(ALUMNOS informacion[], int cantAlumnos){
+    int acum1=0, acum2=0;
+    for (int i = 0; i < cantAlumnos; i++)
+    {
+        if (informacion[i].nota1 >=4 && informacion[i].nota2 >=4)
+        {
+            acum1++;
+        }else{
+            acum2++;
+        }
+    }
+    printf("Los alumnos aprobados son %d\n", acum1);
+    printf("Los alumnos reprobados son %d\n", acum2);
+}
+
+void INFORME_PROMO(ALUMNOS informacion[], int cantAlumnos){
+    printf("-ALUMNOS PROMOCIONADOS-\n");
+    int flag=0;
+    for (int i = 0; i < cantAlumnos; i++)
+    {   
+        if (informacion[i].nota1 >=7 && informacion[i].nota2 >=7)
+        {
+            printf("DNI %10d, %-20s, Promedio %8.2f\n", informacion[i].dniAlu, informacion[i].apellidoyNombreAlu, informacion[i].promedioNotas);
+            flag=1;
+        }
+    }
+    if (flag==0)
+    {
+        printf("No hay alumnos promocionados.");
+    }
+    
+}
+
+int leeyValidaIntEntre2DNI(int min, int max){
     int dato;
     scanf("%d", &dato);
     while (getchar() != '\n');
@@ -86,12 +130,12 @@ int leeyValidaIntEntre2(int min, int max){
     return dato;
 }
 
-int leeyValidaIntEntre2(int min, int max){
+int leeyValidaIntEntre2Notas(int min, int max){
     int dato;
     scanf("%d", &dato);
     while (getchar() != '\n');
     while (dato<min || dato>max){
-        printf("ERROR - El DNI ingresado tiene que ser entre[%d-%d]:", min, max);
+        printf("ERROR - La nota ingresada tiene que ser entre[%d-%d]:", min, max);
         scanf("%d", &dato);
         while (getchar() != '\n');
     }
