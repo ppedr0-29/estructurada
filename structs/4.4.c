@@ -34,25 +34,27 @@ typedef struct
 }VENTAS;
 
 CLIENTE CARGA_CLIENTE ();
-int Ingreso_Cliente(CLIENTE [], int );
+VENTAS INGRESO_VENTAS (CLIENTE []);
+void Ingreso_Cliente(CLIENTE [], int );
 int leeyValidaIntEntre2(int , int );
 void leerTexto(char [], int );
 void validarVacio(char [], int );
+int Ingreso_Ventas(VENTAS[], int, CLIENTE []);
 
 int main (){
     CLIENTE maxclientes[TAM];
     VENTAS datosVentas[TAM];
-    int cantClientes;
-    cantClientes= Ingreso_Cliente(maxclientes,TAM);
+    int cantVentas;
+    Ingreso_Cliente(maxclientes,TAM);
+    cantVentas=Ingreso_Ventas(datosVentas, TAM, maxclientes);
 }
 
-int Ingreso_Cliente(CLIENTE maxclientes[], int ce){
+void Ingreso_Cliente(CLIENTE maxclientes[], int ce){
     int i;
     for (i = 0; i < ce; i++)
     {
         maxclientes[i]=CARGA_CLIENTE();
     }
-    return i;
 }
 
 CLIENTE CARGA_CLIENTE (){
@@ -70,13 +72,13 @@ CLIENTE CARGA_CLIENTE (){
     return clientes;
 }
 
-void Ingreso_Ventas(VENTAS datosVentas[], int ce){
+int Ingreso_Ventas(VENTAS datosVentas[], int ce, CLIENTE maxclientes[]){
     VENTAS aux;
     int i=0, flag=0;
     while (flag==0 && i<ce)
     {
         aux=INGRESO_VENTAS(maxclientes);
-        if (aux.numCliente!=0)
+        if (aux.numCliente!=999)
         {
             datosVentas[i]=aux;
             i++;
@@ -84,28 +86,28 @@ void Ingreso_Ventas(VENTAS datosVentas[], int ce){
             flag=1;
         }
     }
+    printf("Ingreso ventas finalizado.");
     return i;
 }
 
 VENTAS INGRESO_VENTAS(CLIENTE maxclientes[]){ //preguntar si es mejor buscar y printear no existe, o primero validar todo, y luego buscar.
     VENTAS datos;
-    int pos;
+    int pos=-1;
     printf("--VENTAS--");
     printf("Ingrese numero del cliente:");
     datos.numCliente=leeyValidaIntEntre2Ventas(1000, 9999);
-    pos=busquedaSecuencial(maxclientes, TAM, datos.numCliente);
-    while (pos!=-1)
-    {
-        if (datos.numCliente!=999){
-        printf("Ingrese importe de la venta:");
-        datos.importe=leeyValidaFloat(0);
-        printf("Ingrese numero del vendedor");
-        datos.numVendedor=leeyValidaIntEntre2(0,11);
-            }else{
-        printf("Ingreso ventas finalizado.");
+    while(datos.numCliente!=999 &&pos==-1 ){
+        pos=busquedaSecuencial(maxclientes, TAM, datos.numCliente);
+        if(pos!=-1){
+            printf("Ingrese importe de la venta:");
+            datos.importe=leeyValidaFloat(0);
+            printf("Ingrese numero del vendedor");
+            datos.numVendedor=leeyValidaIntEntre2(0,11);
+        }else{
+            printf("El codigo no existe. Ingrese nuevamente:");
+            datos.numCliente=leeyValidaIntEntre2Ventas(1000, 9999);
         }
     }
-    printf("El codigo no existe. Ingrese nuevamente:");
     return datos;
 }
 
