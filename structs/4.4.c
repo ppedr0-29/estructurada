@@ -33,7 +33,7 @@ typedef struct
     int numVendedor;
 }VENTAS;
 
-CLIENTE CARGA_CLIENTE ();
+CLIENTE CARGA_CLIENTE (CLIENTE [], int);
 VENTAS INGRESO_VENTAS (CLIENTE []);
 void Ingreso_Cliente(CLIENTE [], int );
 int leeyValidaIntEntre2(int , int );
@@ -47,6 +47,7 @@ void burbujeoMam (float [], CLIENTE [], int );
 float leeyValidaFloat(float);
 int busquedaSecuencial(CLIENTE [], int , int);
 int leeyValidaIntEntre2Ventas(int , int );
+int norepite(int , CLIENTE [], int );
 
 int main (){
     CLIENTE maxclientes[TAM];
@@ -64,22 +65,34 @@ void Ingreso_Cliente(CLIENTE maxclientes[], int ce){
     printf("--CARGA DE CLIENTES--\n");
     for (i = 0; i < ce; i++)
     {
-        maxclientes[i]=CARGA_CLIENTE();
+        maxclientes[i]=CARGA_CLIENTE(maxclientes, i);
     }
 }
 
-CLIENTE CARGA_CLIENTE (){
+CLIENTE CARGA_CLIENTE(CLIENTE maxclientes[], int i){
     CLIENTE clientes;
-    char nomAux [50];
+    char nomAux[50];
     printf("Ingrese codigo de cliente(4 cifras):");
-    clientes.codCliente=leeyValidaIntEntre2(1000,9999);
+    clientes.codCliente = leeyValidaIntEntre2(1000, 9999);
+    while(norepite(clientes.codCliente, maxclientes, i) == 1){
+        printf("Codigo repetido. Ingrese nuevamente:");
+        clientes.codCliente = leeyValidaIntEntre2(1000, 9999);
+    }
     fflush(stdin);
     printf("Ingrese nombre y apellido del cliente:");
     leerTexto(nomAux, 50);
     validarVacio(nomAux, 50);
     strcpy(clientes.nombreyApellido, nomAux);
-
     return clientes;
+}
+
+int norepite(int aux, CLIENTE maxclientes[], int i){
+    int flag=0, j;
+    for(j=0; j<i && flag==0; j++){
+        if (maxclientes[j].codCliente==aux)
+            flag=1;
+    }
+    return flag;
 }
 
 int Ingreso_Ventas(VENTAS datosVentas[], int ce, CLIENTE maxclientes[]){
@@ -167,7 +180,7 @@ void totalFacturado(int ce, VENTAS datosVentas[], CLIENTE maxclientes[], int can
     printf("\n%11s %-17s %15s", "COD CLIENTE", "NOMBRE Y APELLIDO", "TOTAL FACTURADO");
     for (int i = 0; i < ce; i++)
     {
-        printf("%11d %-17s %15.2f", maxclientes[i].codCliente, maxclientes[i].nombreyApellido, total[i]);
+        printf("\n%11d %-17s %15.2f", maxclientes[i].codCliente, maxclientes[i].nombreyApellido, total[i]);
     }
     
 }
@@ -271,3 +284,4 @@ void validarVacio(char texto[], int largo){
     }
     
 }
+

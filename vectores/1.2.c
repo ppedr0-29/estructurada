@@ -51,7 +51,7 @@ void ingresaCodigos (int vCod[], int vProd[]){
     {
         printf("Ingrese codigo de producto %d (4 cifras):", i+1);
         aux= leeyvalida(1000, 9999);
-        while (!norepite(aux, vCod, i))
+        while (!(norepite(aux, vCod, i)))
         {
             vCod[i]=aux;
         }
@@ -72,7 +72,7 @@ int leeyvalida (int li, int ls){ // valida entre 2 numeros
     return dato;
 }
 
-void norepite (int aux, int vCod[], int i){
+int norepite (int aux, int vCod[], int i){
     int flag=0, j;
     for(j=0; j<i; j++){ // se busca hasta i-1, para que no arroje el mismo valor
         if (vCod[j]==vCod[i])
@@ -88,6 +88,7 @@ void norepite (int aux, int vCod[], int i){
             }
         }
     }
+    return flag;
 }
 
 void ingresoPedidos(int vCod[], int vProd[]){
