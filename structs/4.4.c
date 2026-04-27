@@ -17,7 +17,7 @@ X XXXXX XXXXXXXX $ XXXXXXXXX,XX*/
 
 #include <stdio.h>
 #include <string.h>
-#define TAM 100
+#define TAM 2
 
 typedef struct 
 {
@@ -40,6 +40,13 @@ int leeyValidaIntEntre2(int , int );
 void leerTexto(char [], int );
 void validarVacio(char [], int );
 int Ingreso_Ventas(VENTAS[], int, CLIENTE []);
+void informeVentasCliente(CLIENTE [],  VENTAS [], int, int);
+void VentasVendedor( int, VENTAS []);
+void totalFacturado( int,  VENTAS [], CLIENTE [], int);
+void burbujeoMam (float [], CLIENTE [], int );
+float leeyValidaFloat(float);
+int busquedaSecuencial(CLIENTE [], int , int);
+int leeyValidaIntEntre2Ventas(int , int );
 
 int main (){
     CLIENTE maxclientes[TAM];
@@ -47,10 +54,14 @@ int main (){
     int cantVentas;
     Ingreso_Cliente(maxclientes,TAM);
     cantVentas=Ingreso_Ventas(datosVentas, TAM, maxclientes);
+    informeVentasCliente(maxclientes,  datosVentas, TAM, cantVentas);
+    VentasVendedor( cantVentas, datosVentas);
+    totalFacturado( TAM,  datosVentas, maxclientes, cantVentas);
 }
 
 void Ingreso_Cliente(CLIENTE maxclientes[], int ce){
     int i;
+    printf("--CARGA DE CLIENTES--\n");
     for (i = 0; i < ce; i++)
     {
         maxclientes[i]=CARGA_CLIENTE();
@@ -60,7 +71,6 @@ void Ingreso_Cliente(CLIENTE maxclientes[], int ce){
 CLIENTE CARGA_CLIENTE (){
     CLIENTE clientes;
     char nomAux [50];
-    printf("--CARGA DE CLIENTES--\n");
     printf("Ingrese codigo de cliente(4 cifras):");
     clientes.codCliente=leeyValidaIntEntre2(1000,9999);
     fflush(stdin);
@@ -75,6 +85,7 @@ CLIENTE CARGA_CLIENTE (){
 int Ingreso_Ventas(VENTAS datosVentas[], int ce, CLIENTE maxclientes[]){
     VENTAS aux;
     int i=0, flag=0;
+    printf("--VENTAS--\n");
     while (flag==0 && i<ce)
     {
         aux=INGRESO_VENTAS(maxclientes);
@@ -93,15 +104,14 @@ int Ingreso_Ventas(VENTAS datosVentas[], int ce, CLIENTE maxclientes[]){
 VENTAS INGRESO_VENTAS(CLIENTE maxclientes[]){ //preguntar si es mejor buscar y printear no existe, o primero validar todo, y luego buscar.
     VENTAS datos;
     int pos=-1;
-    printf("--VENTAS--");
     printf("Ingrese numero del cliente:");
     datos.numCliente=leeyValidaIntEntre2Ventas(1000, 9999);
     while(datos.numCliente!=999 &&pos==-1 ){
         pos=busquedaSecuencial(maxclientes, TAM, datos.numCliente);
         if(pos!=-1){
             printf("Ingrese importe de la venta:");
-            datos.importe=leeyValidaFloat(0);
-            printf("Ingrese numero del vendedor");
+            datos.importe=leeyValidaFloat(0.0);
+            printf("Ingrese numero del vendedor:");
             datos.numVendedor=leeyValidaIntEntre2(0,11);
         }else{
             printf("El codigo no existe. Ingrese nuevamente:");
@@ -111,12 +121,91 @@ VENTAS INGRESO_VENTAS(CLIENTE maxclientes[]){ //preguntar si es mejor buscar y p
     return datos;
 }
 
+void informeVentasCliente(CLIENTE maxclientes[], VENTAS datosVentas[], int ce, int cantVentas){
+    int acum;
+    for (int i = 0; i < ce; i++)
+    {   
+        acum=0;
+        for (int j = 0; j < cantVentas; j++)
+        {
+            if (maxclientes[i].codCliente==datosVentas[j].numCliente)
+            {
+                acum++;
+            }
+        }
+        printf("%d ventas al cliente %d\n", acum, maxclientes[i].codCliente);
+    }
+    
+}
+
+void VentasVendedor(int ce, VENTAS datosVentas[]){
+    int vendedores[10]={0};
+        for (int i = 0; i < ce; i++)
+    {
+        vendedores[datosVentas[i].numVendedor - 1]++;
+    }
+    for (int j = 0; j < 10; j++)
+    {
+        printf("\n %d ventas por el vendedor %d", vendedores[j], j+1);
+    }
+    
+}
+
+void totalFacturado(int ce, VENTAS datosVentas[], CLIENTE maxclientes[], int cantVentas){
+    float total[TAM]={0};
+    for (int i = 0; i < ce; i++)
+    {   
+        for (int j = 0; j < cantVentas; j++)
+        {
+            if (maxclientes[i].codCliente==datosVentas[j].numCliente)
+            {
+                total[i]+=datosVentas[j].importe;
+            }
+        }
+    }
+    burbujeoMam(total, maxclientes, cantVentas);
+    printf("\n%11s %-17s %15s", "COD CLIENTE", "NOMBRE Y APELLIDO", "TOTAL FACTURADO");
+    for (int i = 0; i < ce; i++)
+    {
+        printf("%11d %-17s %15.2f", maxclientes[i].codCliente, maxclientes[i].nombreyApellido, total[i]);
+    }
+    
+}
+
+
+void burbujeoMam (float V[], CLIENTE v[], int ce)
+{
+    int j, cota = ce - 1;
+    float AUX;
+    CLIENTE aux;
+    int desordenado = 1;
+
+    while (desordenado)
+    {
+        desordenado = 0;
+        for (j = 0; j < cota; j++)
+        {
+            if (V[j] < V[j + 1])
+            {
+                AUX = V[j];
+                V[j] = V[j + 1];
+                V[j + 1] = AUX;
+                aux = v[j];
+                v[j] = v[j+1];
+                v[j+1] = aux;
+                desordenado = j;
+            }
+        }
+        cota = desordenado;
+    }
+}
+
 float leeyValidaFloat(float lim){
     float dato;
     scanf("%f", &dato);
     getchar();
     while (dato<lim){
-        printf("\nERROR - El importe ingresado tiene que ser mayor a %d: \t", lim);
+        printf("\nERROR - El importe ingresado tiene que ser mayor a %f: \t", lim);
         scanf("%f", &dato);
         getchar();
     }
