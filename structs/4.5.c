@@ -9,8 +9,8 @@
 • Año de Nacimiento (int, ente 1950 y 2019)
 Se solicita realizar los siguientes procesos:
 a. Con datos ingresados por teclado: Crear una Estructura de Datos con los datos enunciados
-anteriormente y llamarla PERSONA.
-b. Mostrar los datos de la Estructura de Datos del punto a.
+anteriormente y llamarla PERSONA. READY
+b. Mostrar los datos de la Estructura de Datos del punto a. READY
 c. Con datos ingresados por teclado: Modificar la Estructura de Datos del punto a., crear una Estructura
 de Datos que contenga Nombre y Apellido y otra Estructura de Datos que contenga Día/Mes/Año
 utilizarla en una nueva Estructurad de Datos llamada PERSONA2.
@@ -43,23 +43,37 @@ typedef struct
     int anio; // entre 1950 y 2019
 }PERSONA;
 
+PERSONA INGRESO();
+void mostrarDatos(PERSONA);
+int leeyValidaIntEntre2(int , int);
+float leeyValidaFloat(float);
+void leerTexto(char [], int );
+void validarVacio(char [], int );
+char validarSexo();
+bool validarFecha(int , int , int );
+int cantDiasMes(int , int );
+int esBisiesto(int );
 
 int main()
 {
     PERSONA datos;
+    datos= INGRESO();
+    mostrarDatos(datos);
+
     return 0;
 }
 
-void IngresarDatos (PERSONA datos){
 
+PERSONA INGRESO(){
+    PERSONA datos;
     int d,m,a;
     printf("Ingrese el numero de Legajo:");
     datos.numLegajo=leeyValidaIntEntre2(1, 10000);
-    printf("\n Ingrese el apellido:");
+    printf("Ingrese el apellido:");
     fflush(stdin);
     leerTexto(datos.apell, 15);
     validarVacio(datos.apell, 15);    
-    printf("\n Ingrese el nombre:");
+    printf("Ingrese el nombre:");
     fflush(stdin);
     leerTexto(datos.nombre, 15);
     validarVacio(datos.nombre, 15);    
@@ -67,19 +81,28 @@ void IngresarDatos (PERSONA datos){
     datos.altura=leeyValidaFloat(0);
     printf("Ingrese el sexo:");
     datos.sex=validarSexo(datos);
+    fflush(stdin);
     printf("Ingrese la fecha con el siguiente formato (dd/mm/aaaa):");
     scanf("%d/%d/%d",&d, &m, &a);
     while(validarFecha(d,m,a)==false){
-        printf("fecha invalida, reingrese:");
+        printf("Fecha invalida, reingrese:");
         scanf("%d/%d/%d",&d, &m, &a);
     }
     datos.dia=d;
     datos.mes=m;
     datos.anio=a;
-    
-    
 
+    return datos;
+}
 
+void mostrarDatos(PERSONA datos){
+    printf("--DATOS INGRESADOS--\n");
+    printf("%s: %d\n", "NUM LEGAJO", datos.numLegajo);
+    printf("%s: %s\n", "APELLIDO", datos.apell);
+    printf("%s: %s\n", "NOMBRE", datos.nombre);
+    printf("%s: %.2f\n", "ALTURA", datos.altura);
+    printf("%s: %c\n", "SEXO", datos.sex);
+    printf("%s: %d/%d/%d\n", "NACIMIENTO", datos.dia, datos.mes, datos.anio);
 }
 
 int leeyValidaIntEntre2(int min, int max){
@@ -87,7 +110,7 @@ int leeyValidaIntEntre2(int min, int max){
     scanf("%d", &dato);
     getchar();
     while (dato<min || dato>max){
-        printf("\nERROR - El dato ingresado tiene que encontrarse dentro del rango[%d-%d]: \t", min, max);
+        printf("ERROR - El dato ingresado tiene que encontrarse dentro del rango[%d-%d]: \t", min, max);
         scanf("%d", &dato);
         getchar();
     }
@@ -99,7 +122,7 @@ float leeyValidaFloat(float lim){
     scanf("%f", &dato);
     getchar();
     while (dato<lim){
-        printf("\nERROR - La altura ingresada tiene que ser mayor a %f: \t", lim);
+        printf("ERROR - La altura ingresada tiene que ser mayor a %f: \t", lim);
         scanf("%f", &dato);
         getchar();
     }
@@ -126,13 +149,14 @@ void validarVacio(char texto[], int largo) {
     }
 }
 
-char validarSexo(PERSONA datos){
+char validarSexo(){
     char dato;
     scanf("%c", &dato);
     dato=toupper(dato);
-    while (dato!='F'|| dato!='M')
-    {
-        printf("\n El dato no es F o M. Ingrese nuevamente:");
+    while (dato!='F'&& dato!='M')
+    {   
+        fflush(stdin);
+        printf("El dato no es F o M. Ingrese nuevamente:");
         scanf("%c", &dato);
         dato=toupper(dato);
     }
@@ -167,3 +191,4 @@ int esBisiesto(int anio){
         bisiesto = 1;
     return bisiesto;
 }
+
