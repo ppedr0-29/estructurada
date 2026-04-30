@@ -211,3 +211,12 @@ void leerTexto (char texto[], int largo){
     }
     
 }
+
+int norepite(int aux, int vec[], int i){
+    int flag=0, j;
+    for(j=0; j<i && flag==0; j++){
+        if (vec[j].cod==aux)
+            flag=1;
+    }
+    return flag;
+}
