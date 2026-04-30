@@ -93,7 +93,7 @@ int cantDiasMes(int , int );
 int esBisiesto(int );
 int leeyvalidaInt(int);
 int norepite(int, PERSONA3, int);
-void ingresoMaterias(PERSONA3, int);
+PERSONA3 ingresoMaterias(PERSONA3, int);
 void mostrarMaterias(PERSONA3, int);
 
 int main()
@@ -223,7 +223,7 @@ PERSONA3 INGRESO3(){
     datos.cumple.dia=d;
     datos.cumple.mes=m;
     datos.cumple.anio=a;
-    ingresoMaterias(datos, MATERIAS);
+    datos = ingresoMaterias(datos, MATERIAS);
     
 
     return datos;
@@ -247,7 +247,7 @@ void mostrarMaterias(PERSONA3 datos, int ce){
     }
 }
 
-void ingresoMaterias(PERSONA3 datos, int ce){
+PERSONA3 ingresoMaterias(PERSONA3 datos, int ce){
     int cod;
     printf("\n--INGRESO DE CODIGOS DE MATERIAS APROBADAS--");
 
@@ -262,7 +262,7 @@ void ingresoMaterias(PERSONA3 datos, int ce){
         datos.mAprobadas[i]=cod;
         
     }
-    
+    return datos;
 }
 int leeyvalidaInt(int lim){
     int dato;
