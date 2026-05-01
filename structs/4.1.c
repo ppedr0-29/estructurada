@@ -15,7 +15,7 @@ Se solicita:
 Actualizar la información de los productos con las ventas realizadas en el mes.
 Al finalizar, mostrar el listado de productos actualizado, informando:
 DESCRIPCION   CANT.UNIDADE VENDIDAS   IMPORTE TOTAL VENDIDO
-XXXXX            XXXX                     $XXXXX,XX.*/
+XXXXX            XXXX                     $XXXXX,XX. READY*/ 
 #include <stdio.h>
 #include <string.h>
 
