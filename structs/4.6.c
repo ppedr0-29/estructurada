@@ -17,15 +17,26 @@ typedef struct
     int posiciones[CANT_CARRERAS];
 }PILOTOS;
 
+void INGRESO(PILOTOS [], int);
+int leeryvalidarIntRango(int , int );
+int leeryvalidarIntRango2(int , int );
+void leerTexto(char [], int );
+int noRepitePos(PILOTOS [], int , int , int );
+int noRepite(PILOTOS [], int , PILOTOS );
+void validarVacio(char [], int );
+void informeCarrera(PILOTOS [], int);
+
 int main(){
     PILOTOS datos[CANT_PILOTOS];
-
+    INGRESO(datos, CANT_PILOTOS);
+    informeCarrera(datos, CANT_PILOTOS);
 
     return 0;
 }
 
-void INGRESO(PILOTOS datos[], int ce, int ce2){
-    PILOTOS auxNombre;
+void INGRESO(PILOTOS datos[], int ce){
+    PILOTOS auxNombre; 
+    int auxPos;
     printf("--INGRESO DE PILOTOS--\n");
     for (int i = 0; i < ce; i++)
     {
@@ -39,15 +50,67 @@ void INGRESO(PILOTOS datos[], int ce, int ce2){
             validarVacio(auxNombre.nombre, TAM);
         }
         strcpy(datos[i].nombre,auxNombre.nombre);
-        printf("Ingrese escuderia para el piloto %s", datos[i].nombre);
+        printf("Ingrese escuderia para el piloto %s:", datos[i].nombre);
         leerTexto(datos[i].escuderia, TAM);
         validarVacio(datos[i].escuderia, TAM);
+        for (int j = 0; j < CANT_CARRERAS; j++)
+        {
+            printf("Ingrese posicion de %s de la carrera %d:", datos[i].nombre, j+1 );
+            auxPos=leeryvalidarIntRango(1,20);
+            while (noRepitePos(datos, auxPos, i, j)==1)
+            {
+                printf("La posicion ya fue ingresada. Reingrese:");
+                auxPos=leeryvalidarIntRango(1,20);
+            }
+            datos[i].posiciones[j]=auxPos;
+        }
     }
-    for (int i = 0; i < ce2; i++)
+}
+
+void informeCarrera(PILOTOS datos[], int ce){
+    int auxCarrera;
+    printf("--RESULTADOS CARRERA--\n");
+    printf("Ingrese numero de carrera a buscar:");
+    auxCarrera=leeryvalidarIntRango2(1,23);
+    while (auxCarrera!=0)
     {
         
+        for (int j = 1; j<=10; j++){
+            for (int i = 0; i < ce; i++)
+            {
+                if (datos[i].posiciones[auxCarrera-1]==j)
+                {
+                    printf("%d-%s (%s)\n", datos[i].posiciones[auxCarrera-1], datos[i].nombre, datos[i].escuderia);
+                }
+            }
+        }
+        printf("Ingrese numero de carrera a buscar:");
+        auxCarrera=leeryvalidarIntRango2(1,23);
     }
-    
+    printf("Programa finalizado.");
+}
+
+
+int leeryvalidarIntRango(int min, int max){
+    int dato;
+    scanf("%d", &dato);
+    while (dato<min || dato>max)
+    {
+        printf("Posicion no valida. Reingrese:");
+        scanf("%d", &dato);
+    }
+    return dato;
+}
+
+int leeryvalidarIntRango2(int min, int max){
+    int dato;
+    scanf("%d", &dato);
+    while ((dato<min || dato>max) && dato!=0)
+    {
+        printf("Carrera no valida. Reingrese:");
+        scanf("%d", &dato);
+    }
+    return dato;
 }
 
 void leerTexto(char texto[], int largo){
@@ -66,6 +129,18 @@ void leerTexto(char texto[], int largo){
     }
 }
 
+int noRepitePos(PILOTOS datos[], int posIngresada, int i, int j){
+    int flag=0;
+    for (int k = 0; k < i; k++)
+    {
+        if (datos[k].posiciones[j]==posIngresada)
+        {
+            flag=1;
+        }
+    }
+    return flag;
+}
+
 int noRepite(PILOTOS datos[], int i, PILOTOS auxNombre){
     int flag=0;
     for (int j = 0; j < i; j++)
@@ -81,7 +156,7 @@ int noRepite(PILOTOS datos[], int i, PILOTOS auxNombre){
 void validarVacio(char texto[], int largo){
     while (strlen(texto)==0)
     {
-        printf("El texto no puede ser vacio. Reingrese");
+        printf("El texto no puede ser vacio. Reingrese:");
         leerTexto(texto, TAM);
     }
 }
