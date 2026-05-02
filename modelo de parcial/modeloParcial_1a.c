@@ -1,0 +1,2 @@
+/*una agencia necesita liquidar las comisiones de sus vendedores y para ello dispone del archivo
+ventas.dat con la siguiente estructura*/

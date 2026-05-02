@@ -7,8 +7,8 @@ de carrera.*/
 
 #include <stdio.h>
 #include <string.h>
-#define CANT_PILOTOS 20
-#define CANT_CARRERAS 23
+#define CANT_PILOTOS 5
+#define CANT_CARRERAS 5
 #define TAM 30
 typedef struct
 {
@@ -71,7 +71,7 @@ void informeCarrera(PILOTOS datos[], int ce){
     int auxCarrera;
     printf("--RESULTADOS CARRERA--\n");
     printf("Ingrese numero de carrera a buscar:");
-    auxCarrera=leeryvalidarIntRango2(1,23);
+    auxCarrera=leeryvalidarIntRango2(1,CANT_CARRERAS);
     while (auxCarrera!=0)
     {
         
