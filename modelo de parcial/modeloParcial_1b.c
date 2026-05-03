@@ -14,7 +14,7 @@ Listado de stock por Producto mostrando su Nombre, Categoría y Stock ordenado a
 El nombre del Producto con mayor stock, en caso de ser más de uno mostrarlos a todos (resolver en una función).
 La cantidad total comprada por cada Categoría.
 Validar todos los datos que ingresan por teclado según lo indicado.
-El código debe estar correctamente indentado.*/
+El código debe estar correctamente indentado. READY*/
 
 #include <stdio.h>
 #include <string.h>
