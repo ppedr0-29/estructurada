@@ -113,6 +113,18 @@ int busqueda(VENDEDOR datos[], int cv, int numVen2) {
     return pos;
 }
 
+int norepite(VENDEDOR datos[], int i, int num) {
+    int flag = 0, j = 0;
+    while (flag == 0 && j < i) {
+        if (datos[j].numVen == num) {
+            flag = 1;
+        } else {
+            j++;
+        }
+    }
+    return flag;
+}
+
 void actCom(VENDEDOR datos[], int cv, float v[][21]) {
     int numVen2, pos;
     float totVentas;
@@ -210,18 +222,6 @@ int leeYvalIntE2CF(int min, int max, int cf) {
     return dato;
 }
 
-int norepite(VENDEDOR datos[], int i, int num) {
-    int flag = 0, j = 0;
-    while (flag == 0 && j < i) {
-        if (datos[j].numVen == num) {
-            flag = 1;
-        } else {
-            j++;
-        }
-    }
-    return flag;
-}
-
 char valSector() {
     fflush(stdin);
     char dato;
@@ -258,7 +258,7 @@ float leeYvalFloat(float lim) {
 
 float minimo(int cv, VENDEDOR datos[]) {
     float min = datos[0].comAcob;
-    for (int i = 0; i < cv; i++) {
+    for (int i = 1; i < cv; i++) {
         if (datos[i].comAcob < min) {
             min = datos[i].comAcob;
         }
