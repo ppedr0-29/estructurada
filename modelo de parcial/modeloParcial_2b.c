@@ -52,15 +52,15 @@ void actCant(EMP [], float [][7], int );
 int main(){
     EMP datos[TAM];
     float ventas[TAM][7]={{0}};
-    float vc[TAM];
+    float vf[TAM];
 
     int cantEmp=ingreso(datos, TAM);
     if (cantEmp!=0)
     {
         actCant(datos, ventas, cantEmp);
         listado(datos, ventas, cantEmp ,  7);
-        sumafM(ventas, cantEmp,  7, vc);
-        MayGustVentas( datos, vc, cantEmp);
+        sumafM(ventas, cantEmp,  7, vf);
+        MayGustVentas( datos, vf, cantEmp);
         cantxC( datos, cantEmp);
     }
     printf("Programa finalizado.");
@@ -190,7 +190,7 @@ void cantxC(EMP datos[], int ce){
     printf("%d Sin coccion\n", cantS);
 }
 
-void sumafM(float ventas[][7], int f, int c, float vc[]){
+void sumafM(float ventas[][7], int f, int c, float vf[]){
     float suma;
     for (int j = 0; j < f; j++)
     {
@@ -199,7 +199,7 @@ void sumafM(float ventas[][7], int f, int c, float vc[]){
         {
             suma += ventas[j][i];
         }
-        vc[j]=suma;
+        vf[j]=suma;
     }
 }
 
