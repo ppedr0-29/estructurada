@@ -66,12 +66,11 @@ VENDEDOR ingresoDatos(VENDEDOR datos[], int i) {
 
     printf("Ingrese numero de vendedor (0 fin): ");
     info.numVen = leeYvalIntE2CF(10, 99, 0);
-
-    if (info.numVen != 0) {
-        while (norepite(datos, i, info.numVen) == 1) {
+    while (norepite(datos, i, info.numVen) == 1) {
             printf("El num se repite. Reingrese: ");
             info.numVen = leeYvalIntE2CF(10, 99, 0);
         }
+    if (info.numVen != 0) {
         printf("Ingrese Nombre del vendedor: ");
         leertexto(info.nomVen, CARAC);
         valVacio(info.nomVen, CARAC);
@@ -87,7 +86,7 @@ VENDEDOR ingresoDatos(VENDEDOR datos[], int i) {
 int ingreso(VENDEDOR datos[], int ce) {
     VENDEDOR aux;
     int flag = 0, i = 0;
-    printf("--LISTADO DE VENDEDORES--");
+    printf("--LISTADO DE VENDEDORES--\n");
     while (flag == 0 && i < ce) {
         aux = ingresoDatos(datos, i);
         if (aux.numVen != 0) {
@@ -102,7 +101,6 @@ int ingreso(VENDEDOR datos[], int ce) {
 
 int busqueda(VENDEDOR datos[], int cv, int numVen2) {
     int pos = -1, i = 0;
-
     while (pos == -1 && i < cv) {
         if (datos[i].numVen == numVen2) {
             pos = i;
@@ -139,8 +137,8 @@ void actCom(VENDEDOR datos[], int cv, float v[][21]) {
             for (int i = 0; i < 21; i++) {
                 printf("Ingrese las ventas del dia %d: ", i + 1);
                 totVentas = leeYvalFloat(0);
-                v[pos][i] = totVentas;
-                datos[pos].comAcob += totVentas * ((float)datos[pos].porCom / 100);
+                v[pos][i] = totVentas*((float)datos[pos].porCom / 100);
+                datos[pos].comAcob += v[pos][i];
             }
             printf("Ventas guardada\n");
             printf("Ingrese numero del vendedor: ");
