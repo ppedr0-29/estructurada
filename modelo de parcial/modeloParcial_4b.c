@@ -110,7 +110,7 @@ int noRepite(PROD datos[], int i, int num) {
 
 void actStock(PROD datos[], int cp, int m[][SEM], int rubro[]) {
     int num2, pos, totVentas;
-    printf("--ACTUALIZACION STOCK--\N");
+    printf("--ACTUALIZACION STOCK--\n");
     printf("Ingrese num producto: ");
     num2 = leeYvalE2CF(10, 99, 0);
     
