@@ -135,7 +135,7 @@ void ventasMes(Productos productos[], int cantProductos){
             while (strlen(codigo2Aux) != 5) {
             printf("Codigo invalido. Ingrese nuevamente: ");
             leerTexto(codigo2Aux, 10);
-        }
+            }
             strcpy(codigo2, codigo2Aux);
             pos=busquedaSecuencial(productos, cantProductos, codigo2);
         }

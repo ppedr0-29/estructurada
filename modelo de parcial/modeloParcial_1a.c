@@ -295,3 +295,4 @@ void validarVacio(char texto[], int largo){
         leerTexto(texto, largo);
     }
 }
+

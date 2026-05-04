@@ -91,13 +91,13 @@ EMP ingresoDatos(EMP datos[], int i){
     EMP info;
     printf("Ingrese el codigo de empananda(0 fin):");
     info.codE=leeyvalIntE2CF(100,999,0);
-    if (info.codE!=0)
-    {   
-        while (norepite(datos, i, info.codE)==1)
+    while (norepite(datos, i, info.codE)==1)
         {
             printf("El codigo se repite. Reingrese:");
             info.codE=leeyvalIntE2CF(100,999,0);
         }
+    if (info.codE!=0)
+    {   
         printf("Ingrese el gusto:");
         leerTexto(info.nomGusto, LONG);
         valVacio(info.nomGusto, LONG);

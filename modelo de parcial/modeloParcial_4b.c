@@ -53,9 +53,9 @@ int main() {
         listado(m, cantP, 7, datos);
         stockSup(datos, cantP);
         noVenta(rubro);
-    } else {
+    } 
         printf("Programa finalizado.");
-    }
+    
     return 0;
 }
 
