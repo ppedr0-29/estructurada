@@ -20,7 +20,8 @@ typedef struct
 }sProductos;
 
 int main(){
-    sProductos prod;
+    sProductos prod; //a
+    //b
     printf("Ingrese el codigo del producto: ");
     scanf("%d", &prod.codigo);
     fflush(stdin);
@@ -28,7 +29,8 @@ int main(){
     fgets(prod.descripcion, 31, stdin);
     printf("Ingrese el precio: $");
     scanf("%f", &prod.precio);
-    sProductos *ptprod= &prod;
+    //b
+    sProductos *ptprod= &prod; //c
 
     printf("El codigo del producto es %d\nSu descripcion es: %s Su precio es de $%.2f ", (*ptprod).codigo, ptprod->descripcion, ptprod->precio);
     return 0;

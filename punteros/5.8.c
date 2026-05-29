@@ -8,19 +8,32 @@ Realizar un programa que permita cargar alumnos y mostrarlos. Como máximo permi
 El ingreso finaliza con un DNI igual a 0. Realizar una función para cargar y otra para mostrar 
 usando notación de punteros*/
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #define TAM 50
+
 typedef struct 
 {
     char nom[31];
     int dni;
 }alu;
+
+int ingreso(alu *pAlu, int);
+alu cargarVec();
+int leeyValidaEntre2(int , int , int );
+void leerTexto (char [], int );
+void validarVacio(char [], int );
+void mostrarAlu(alu *pAlu, int);
+
 int main(){
     alu alumnos[TAM];
     alu *pAlu = alumnos;
     printf("INGRESO DE ALUMNOS\n");
     int cantAlu = ingreso(pAlu, TAM);
+    mostrarAlu(pAlu, cantAlu);
     return 0;
 }
+
 int ingreso(alu *ptr, int ce){
     int i=0;
     alu aux;
@@ -32,10 +45,11 @@ int ingreso(alu *ptr, int ce){
     }
     return i;
 }
+
 alu cargarVec(){
     alu aux;
     printf("Ingrese el dni: ");
-    aux.dni=leeyValidaEntre2(10000000,99999999);
+    aux.dni=leeyValidaEntre2(10000000,99999999, 0);
     if (aux.dni!=0){
         printf("Ingrese el nombre: ");
         leerTexto(aux.nom, 31);
@@ -44,10 +58,17 @@ alu cargarVec(){
     return aux;
 }
 
-int leeyValidaEntre2(int min, int max){
+void mostrarAlu(alu *ptr, int cantAlu){
+    for (int i = 0; i < cantAlu; i++)
+    {
+        printf("DNI del alumno %d - %d y su nombre es %s\n", i+1, (ptr+i)->dni, (ptr+i)->nom);
+    }
+}
+
+int leeyValidaEntre2(int min, int max, int cf){
     int dato;
     scanf("%d", &dato);
-    while(dato<min || dato > max){
+    while((dato<min || dato > max) && dato!=cf){
         printf("Error- REINGRESE:");
         scanf("%d", &dato);
     }
