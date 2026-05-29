@@ -199,6 +199,7 @@ void burbujeo(char V[][TAM], int ce)
 
 void leerTexto (char texto[], int largo){
     int i;
+    fflush(stdin);
     fgets(texto, largo, stdin);
     i=0;
     while (texto[i]!='\0')
