@@ -97,6 +97,16 @@ Malloc y Calloc(pone toda la memoria en 0) para asignacion y Realloc para reasig
 ya cargados)
 
 para usar un puntero de struct. hay dos formas : 1. (*pt).codigo 2. pt->codigo
+realloc tiene que ir en el main 
 
+ARCHIVOS-----------------------------------------------------------------------
+Comando / Tipo    Descripción
+FILE *    Puntero a la estructura de control del flujo para comunicarnos con el archivo
+fopen    Crea el flujo y retorna el puntero
+fclose    Cierra el flujo y libera la memoria
+fread    Lectura de Archivos Binarios
+fwrite    Escritura de Archivos Binarios
+feof    Detección del fin de archivo
+fprintf    Escritura con formato en archivos de texto
 */
 
