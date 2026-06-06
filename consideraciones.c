@@ -108,5 +108,9 @@ fread    Lectura de Archivos Binarios
 fwrite    Escritura de Archivos Binarios
 feof    Detección del fin de archivo
 fprintf    Escritura con formato en archivos de texto
+
+
+de fread a fwrite va un fseek
+de fwrite a fread va o fseek o fflush
 */
 
