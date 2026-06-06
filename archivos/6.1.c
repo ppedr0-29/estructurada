@@ -89,7 +89,7 @@ void LECTURA(){
     while (!feof(arch))
     {   
         printf("DNI: %d | Nombre: %s | Nota 1: %d | Nota 2: %d | Promedio: %.2f\n", 
-               datos.dni, datos.nya, datos.nota1, datos.nota2, datos.promedio);
+            datos.dni, datos.nya, datos.nota1, datos.nota2, datos.promedio);
         fread(&datos, sizeof(datos), 1, arch);
     }
     

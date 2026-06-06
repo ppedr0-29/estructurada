@@ -26,7 +26,7 @@ typedef struct
     int anio;
     int dia;
     int codigo;
-    float importe
+    float importe;
 }ventas;
 
 
