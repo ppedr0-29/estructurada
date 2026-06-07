@@ -4,6 +4,9 @@
 • Descripción (de hasta 50 caracteres)
 Realizar un programa que permita eliminar productos dado su código*/
 #include<stdio.h>
+#include<stdlib.h>
+#include <conio.h>
+#include <string.h>
 
 typedef struct 
 {
@@ -12,61 +15,77 @@ typedef struct
     char desc[51];
 }prod;
 
+int leeyvalidaIntE2(int, int );
+void mostrar(FILE*);
+
 int main(){
     prod datos;
     FILE *arch;
     FILE *archT;
-    prod *pdatos=&datos;
-    int cod;
-    long pos;
-    arch=fopen("productos.dat", "rb");
-    archT=fopen("ProductosT.dat", "wb");
+    int cod, encontrado=0;
+    arch=fopen("PRODUCTOS.dat", "rb");
+    archT=fopen("PRODUCTOS.tmp", "wb");
+    printf("arch: %p\n", arch);
+    printf("archT: %p\n", archT);
     if(arch ==NULL || archT == NULL){
         printf("Error al abrir el archivo");
         getch();
         exit (1);
     }
-    printf("Ingrese el codigo del producto a eliminar (0 para finalizar): ");
-    cod=leeyvalidaInt(0);
-    while(cod!=0){
-        pos=busqueda(cod, arch, pdatos);
-        if(pos == -1){
-            printf("Error. CODIGO INEXISTENTE; REINGRESE: ");
-        }else{
-            if(datos.codigo!=cod)
-                fwrite(&datos, sizeof())
-        }
-        cod=leeyvalidaInt(0);
-    }
-    return 0;
-}
-
-long busqueda(int cod, FILE *arch, prod *pdatos){
-    prod datos;
-    int flag=0;
-    long pos=-1;
+    mostrar(arch);
+    printf("\nIngrese el codigo del producto a eliminar:");
+    cod=leeyvalidaIntE2(1000,9999);
     rewind(arch);
     fread(&datos, sizeof(datos), 1, arch);
-    while (!feof(arch) && flag==0)
-    {   
-        
-        if (datos.codigo == cod)
+    while (!feof(arch))
+    {
+        if (datos.codigo!=cod)
         {
-            pos=ftell(arch);
-            flag=1;
-            *pdatos=datos;
-        }else{ 
-            pos=-1;
+            fwrite(&datos, sizeof(datos), 1, archT);
+        }else{
+            encontrado=1;
         }
         fread(&datos, sizeof(datos), 1, arch);
     }
-    return pos;
+    fclose(arch);
+    fclose(archT);
+    if (encontrado==1)
+    {   
+        remove("PRODUCTOS.dat");
+        rename("PRODUCTOS.tmp", "PRODUCTOS.dat");
+        printf("Producto eliminado.\n");
+    }else{
+        printf("Codigo inexistente\n");
+        remove("PRODUCTOS.tmp");
+    }
+    arch=fopen("PRODUCTOS.dat", "rb");
+    if(arch ==NULL){
+        printf("Error al abrir el archivo");
+        getch();
+        exit (1);
+    }
+    mostrar(arch);
+    fclose(arch);
+
+    return 0;
 }
 
-int leeyvalidaInt(int lim){
+void mostrar(FILE*arch){
+    prod datos;
+    rewind(arch);
+    fread(&datos, sizeof(datos), 1, arch);
+    printf("CODIGO\tPRECIO\tDESCRIPCION\n");
+    while(!feof(arch)){
+        printf("%6d\t$%-6.2f\t%10s\n", datos.codigo, datos.precio, datos.desc);
+        fread(&datos, sizeof(datos), 1, arch);
+    }
+}
+
+
+int leeyvalidaIntE2(int min, int max){
     int dato;
     scanf("%d", &dato);
-    while(dato<lim){
+    while(dato<min || dato>max){
         printf("Error. reingrese: ");
         scanf("%d", &dato);
     }

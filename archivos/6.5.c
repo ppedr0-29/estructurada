@@ -38,7 +38,7 @@ int main(){
         getch();
         exit(1);
     }
-    printf("Ingrese el codigo del producto");
+    printf("Ingrese el codigo del producto:");
     cod=leeyvalidaInt(0);
     while (cod!=0)
     {
