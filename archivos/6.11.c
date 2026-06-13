@@ -5,8 +5,8 @@ en los distintos programas de canales de cable a lo largo del día. Cada registr
 • Rating (float)
 El archivo se encuentra ordenado por canal.
 Se solicita informar:
-a. Aquellos canales que obtengan menos de 15 puntos en total.
-b. El canal más visto.
+a. Aquellos canales que obtengan menos de 15 puntos en total.LISTO
+b. El canal más visto. LISTO
 c. Generar un archivo con el promedio de rating de cada canal que incluya dos campos:
 • Número de canal.
 • Promedio.*/
@@ -29,6 +29,7 @@ typedef struct
 }RatProm;
 
 void mostrar(FILE *);
+void mostrarP(FILE *);
 
 int main(){
     TV datos;
@@ -38,7 +39,7 @@ int main(){
     float ratMax;
     int canMax, primero=1, cantProg;
     arch= fopen("RATING.dat", "r+b");
-    archP= fopen("promedio.dat", "a+b");
+    archP= fopen("promedio.dat", "w+b");
     if (arch==NULL || archP==NULL)
     {
         printf("Error al abrir alguno de los archivos");
@@ -52,19 +53,33 @@ int main(){
     while (!feof(arch))
     {
         canAnt=datos.numC;
+        cantProg=0;
         while (canAnt==datos.numC && !feof(arch))
         {
             totRat+=datos.rating;
             cantProg++;
             fread(&datos, sizeof(datos), 1, arch);
         }
+        if(primero==1){//solo primer canal para tomaer los primeros valores como maximos
+            ratMax=totRat;
+            canMax=canAnt;
+            primero=0;
+        }else
+            if(totRat>ratMax){
+                ratMax=totRat;
+                canMax=canAnt;
+            }
         if (totRat<15.0)
         {
             printf("El/los canales que obtuvieron un rating menor a 15 fueron: %d\n", canAnt);
         }
+        info.prom=totRat/cantProg;
+        info.numC=canAnt;
+        fwrite(&info, sizeof(info), 1, archP);
         totRat=0;
     }
-    
+    printf("El canal %d tuvo el mayor rating con %.2f puntos", canMax, ratMax);
+    mostrarP(archP);
 
 
     fclose(arch);
@@ -81,6 +96,17 @@ void mostrar(FILE *arch){
     while (!feof(arch))
     {
         printf("%7d\t%-8s\t%6.2f\n", datos.numC, datos.prog, datos.rating);
+        fread(&datos, sizeof(datos), 1, arch);
+    }
+}
+void mostrarP(FILE *arch){
+    RatProm datos;
+    rewind(arch);
+    fread(&datos, sizeof(datos), 1, arch);
+    printf("\n%7s\t%-8s\n", "NUM CAN", "PROMEDIO");
+    while (!feof(arch))
+    {
+        printf("%7d\t%-7.2f\n", datos.numC, datos.prom);
         fread(&datos, sizeof(datos), 1, arch);
     }
 }
