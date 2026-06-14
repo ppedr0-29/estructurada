@@ -114,3 +114,39 @@ de fread a fwrite va un fseek
 de fwrite a fread va o fseek o fflush
 */
 
+/*#include <stdio.h>
+#define ARCHIVO "ventas.dat"
+
+typedef struct
+{
+    int codigo;
+    int cantVendida;
+    int dia;
+} Venta;
+
+int main()
+{
+    Venta vec[] = {
+        {101, 5, 3},
+        {101, 2, 7},
+        {101, 8, 15},
+        {205, 3, 1},
+        {205, 6, 12},
+        {310, 1, 5},
+        {310, 4, 20},
+        {310, 2, 28}
+    };
+
+    int cant = sizeof(vec) / sizeof(Venta);
+    FILE *arch = fopen(ARCHIVO, "wb");
+    if (arch == NULL)
+    {
+        printf("Error al crear el archivo");
+        return 1;
+    }
+    for (int i = 0; i < cant; i++)
+        fwrite(&vec[i], sizeof(Venta), 1, arch);
+
+    fclose(arch);
+    return 0;
+}*/
