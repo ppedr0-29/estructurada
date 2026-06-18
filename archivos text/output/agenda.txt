@@ -1,0 +1,4 @@
+NOMBRE;APELLIDO;CORREO;TELEFONO
+Pedro;Loraschi;ploraschi@gmail.com;1157717220
+Santiago;Veigas;sveigas@gmail.com;1155972367
+Kamila;Chateloin;kpacha@gmail.com;1162108632

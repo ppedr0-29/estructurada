@@ -46,6 +46,9 @@ typedef struct
     float precio;
 }TARIFA;
 
+int leeyvalE2(int min, int max);
+int CargaTarifas(TARIFA v[], int mes);
+
 int main(){
     VIAJES datos;
     TARIFA total[8];
@@ -60,14 +63,19 @@ int CargaTarifas(TARIFA v[], int mes){
     TARIFA info;
     int i=0;
     arch=fopen("tarifas.dat", "rb");
-    //rewind(arch);
+    if (arch == NULL)
+    {
+        printf("Error al abrir tarifas.dat");
+        getch();
+        exit(1);
+    }
     fread(&info, sizeof(info), 1, arch);
     while (!feof(arch) && i<8)
     {
         if (mes==info.mes)
         {
-            i++;
             v[i]=info;
+            i++;
         }
         fread(&info, sizeof(info), 1, arch);
     }
