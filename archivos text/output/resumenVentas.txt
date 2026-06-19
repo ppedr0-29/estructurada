@@ -1,0 +1,3 @@
+La cantidad total de ventas realizadas 5
+La cantidad de produtos vendidos -67070443
+En la sucursal -2 se vendio $-4785203.50
