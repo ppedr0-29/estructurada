@@ -44,7 +44,7 @@ int main(){
         leerTexto(datos.correo, 100);
         printf("Ingresa telefono: ");
         datos.tel=leeyvalIntE2CF(1100000000, 1199999999);
-        fprintf(arch, "%s;%s;%s;%d\n", datos.nombre,datos.apellido, datos.correo, datos.tel);
+        fprintf(arch, "%d;%s;%s;%s\n",datos.tel, datos.nombre,datos.apellido, datos.correo);
         printf("Ingrese nombre: ");
         leerTexto(datos.nombre, 100);
         printf("Ingrese apellido: ");

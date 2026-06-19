@@ -30,14 +30,16 @@ int main(){
     fgets(auxT, 100, arch);
     printf("Ingrese el apellido a buscar: ");
     leerTexto(auxT, 100);
-    fscanf(arch, "%s;%s;%s;%d", datos.nombre, datos.apellido, datos.correo, &datos.tel);
+    fscanf(arch, "%d;%s;%s;%s", &datos.tel, datos.nombre, datos.apellido, datos.correo);
     while (!feof(arch))
     {   
         if (strcmpi(datos.apellido, auxT)==0)
         {
             printf("Nombre:%s\nApellido:%s\nCorreo:%s\nTel:%d\n", datos.nombre, datos.apellido, datos.correo, datos.tel);
+        }else{
+            printf("%s no es igual a %s\n", auxT, datos.apellido);//esto lo escribi para saber que leia y lee h
         }
-        fscanf(arch, "%s;%s;%s;%d", datos.nombre, datos.apellido, datos.correo, &datos.tel);
+        fscanf(arch, "%d;%s;%s;%s", &datos.tel, datos.nombre, datos.apellido, datos.correo);
     }
     
 }
