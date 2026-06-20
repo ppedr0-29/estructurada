@@ -84,7 +84,6 @@ typedef struct
 }ERROR;
 
 long busqueda(FILE *, char [], STOCK *);
-int indice(char );
 void procesarArchivo();
 void stockSuperado(FILE *);
 void leeyvalInt(int , int *);
