@@ -114,7 +114,7 @@ void procesarArchivos(){
     while (!feof(archV)){
         pos=busqueda(viajes.codigo, archF, pchoferes);
         if(pos ==-1){
-            
+            //lo solucione, hay que hacer una busqueda en rechazos y si esta da -1 guardar en rechazos, sino seguir.
             rechazos(viajes.codigo);
             strcpy(codAntRechazo, viajes.codigo);
             while ((strcmpi(codAntRechazo, viajes.codigo)==0) && !feof(archV))
