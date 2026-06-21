@@ -13,4 +13,7 @@ Además, se necesita determinar e informar:
 El nombre del empleado que cobra el máximo sueldo actualizado, en caso de ser más de uno mostrar el último.
 El importe total a pagar por cada categoría (resolver en una función).
 Validar todos los datos que ingresan por teclado según lo indicado.
-El código debe estar correctamente identado.*/
+El código debe estar correctamente identado.
+
+
+*/

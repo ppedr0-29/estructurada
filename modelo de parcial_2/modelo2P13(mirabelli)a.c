@@ -15,4 +15,6 @@ Código de artículo
 Cantidad
 Si ya hay un registro previo en dicho archivo de errores con el mismo artículo debe incrementarse la cantidad. 
 Informar al final la cantidad de artículos actualizados y la cantidad de errores utilizando la función INFORME.
-Validar todos los datos que ingresan por teclado según lo indicado.*/
+Validar todos los datos que ingresan por teclado según lo indicado.
+
+*/
