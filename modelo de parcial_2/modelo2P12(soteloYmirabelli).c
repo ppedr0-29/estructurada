@@ -71,6 +71,8 @@ informe(){
 }
 */
 
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -89,8 +91,52 @@ typedef struct
     int cantVend;
 }ERRORES;
 
-int main(){
+void errores(ERRORES );
+void procesarArchivo();
+long BUSCAR(FILE *, STOCK *, char []);
+void leerTexto(char [], int );
+void leeyvalTexto(char [], int );
+FILE* abrirArchivo(char [], char []);
+void informe(int , int );
+void leeyvalInt(int , int *);
 
+int main(){
+    procesarArchivo();
+
+    return 0;
+}
+
+void errores(ERRORES info){
+    ERRORES datos;
+    FILE *archE;
+    int flag=0;
+    long pos;
+    archE=fopen("Errores.dat", "r+b");
+    if (archE==NULL)
+    {
+        archE=abrirArchivo("Errores.dat", "w+b");
+    }
+    fread(&datos, sizeof(datos), 1, archE);
+    while (!feof(archE) && flag==0)
+    {
+        if (strcmpi(datos.codArt, info.codArt)==0)
+        {
+            flag=1;
+            pos=ftell(archE)-sizeof(datos);
+        }
+        fread(&datos, sizeof(datos), 1, archE);
+    }
+    if(flag==0){
+        fseek(archE, 0, SEEK_END);
+        fwrite(&info, sizeof(info), 1, archE);
+    }else{
+        info.cantVend+=datos.cantVend;
+        fseek(archE,pos,SEEK_SET);
+        fwrite(&info, sizeof(info), 1, archE);
+        fflush(archE);
+    }
+    
+    fclose(archE);
 }
 
 void procesarArchivo(){
@@ -107,7 +153,7 @@ void procesarArchivo(){
     while (strcmpi(info.codArt, "SALE")!=0)
     {
         pos=BUSCAR(arch, pdatos, info.codArt);
-        while (pos==-1)
+        while (pos==-1 && strcmpi(info.codArt, "SALE")!=0)
         {   
             printf("Reingrese el codigo del producto(SALE para terminar): ");
             leeyvalTexto(info.codArt, 5);
@@ -115,15 +161,13 @@ void procesarArchivo(){
         }
         if (strcmpi(info.codArt, "SALE")!=0)
         {
-            do
-            {
-                printf("Ingrese la cantidad vendida: ");
-                scanf("%d", pcant);
-            } while (*pcant<0);
+            printf("Ingrese la cantidad vendida: ");
+            leeyvalInt(0,pcant);
+        
             if (*pcant>datos.stock)
             {
                 cantnoVentas++;
-                errores();
+                errores(info);
             }else{
                 datos.stock-=*pcant;
                 cantVentas++;
@@ -131,17 +175,28 @@ void procesarArchivo(){
                 fwrite(&datos, sizeof(datos), 1, arch);
                 fflush(arch);
             }
-        }
         printf("Ingrese codigo del producto(SALE para terminar): ");
         leeyvalTexto(info.codArt, 5);
+        }
+        
     }
-    
+    informe(cantVentas, cantnoVentas);
+
+    fclose(arch);
 }
 
+void leeyvalInt(int lim, int *dato){
+    scanf("%d", dato);
+    while (*dato<=lim)
+    {
+        printf("Error. Reingrese:");
+        scanf("%d", dato);
+    }
+}
 
 long BUSCAR(FILE *arch, STOCK *pdatos, char cod[]){
     STOCK datos;
-    long pos;
+    long pos=-1;
     int flag=0;
     rewind(arch);
     fread(&datos, sizeof(datos), 1, arch);
@@ -161,12 +216,12 @@ long BUSCAR(FILE *arch, STOCK *pdatos, char cod[]){
 void leerTexto(char texto[], int largo){
     fflush(stdin);
     fgets(texto, largo, stdin);
-    int i;
+    int i=0;
     while (texto[i]!='\0')
     {
         if (texto[i]=='\n')
         {
-            texto[i]='0';
+            texto[i]='\0';
         }
         i++;
     }
@@ -191,4 +246,8 @@ FILE* abrirArchivo(char nombre[], char tipo[]){
         exit(1);
     }
     return arch;
+}
+
+void informe(int cantV, int cantNV){
+    printf("Se realizaron %d ventas, y no puedieron completarse %d ventas", cantV, cantNV);
 }
