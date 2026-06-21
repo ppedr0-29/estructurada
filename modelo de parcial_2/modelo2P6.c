@@ -89,6 +89,7 @@ long busqueda(FILE*arch, char codigo[], STOCK*pdatos){
 }
 
 void leerTexto(char texto[], int largo){
+    fflush(stdin);
     fgets(texto, largo, stdin);
     int i=0;
     while(texto[i]!='\0'){
