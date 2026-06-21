@@ -18,7 +18,9 @@ Una función para generar el archivo descxdia.csv que contenga día y cantidad d
 
 /*
 abrir archivo material.dat r+b
-abrir archivo sindescarga a+b
+abrir archivo descargas.dat rb
+abrir archivo sindescarga.dat a+b
+abrir archivo descxdia.cvs wt
 fread(archM)
 while(!feof){
     pos=busqueda(busco en descargas, que exista)
@@ -33,7 +35,17 @@ while(!feof){
 }
 
 descargasxDia(){
-    v[30];
+    v[31]=0;
+    cantDTot=0;
+    rewind(archD)
+    fread(archD)
+    while(!feof(archD)){
+        v[dia-1]++;
+        
+    }
+    for int i=0; i<31; i++´{
+        fprintf(archDxD, "%d;%d\n", i+1, v[i]);
+    }
 }
 
 */
