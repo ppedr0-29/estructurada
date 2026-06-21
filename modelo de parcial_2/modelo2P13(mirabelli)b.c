@@ -51,7 +51,7 @@ typedef struct
     int cant;
 }ERROR;
 
-void errores(ERRORES );
+void errores(ERROR );
 void procesarArchivo();
 long BUSCAR(FILE *, PROD *, char []);
 void leerTexto(char [], int );
