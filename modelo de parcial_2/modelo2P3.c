@@ -68,6 +68,7 @@ porcentajePorSector(impSector, comSector)   // NO recibe el archivo, ya tiene to
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
+#include <ctype.h>
 
 typedef struct
 {
@@ -257,11 +258,13 @@ long busqueda(FILE *arch, char texto[], VENTAS *pdatos){
 void leeyvalC(char *dato){
     fflush(stdin);
     scanf("%c", dato);
+    toupper(*dato);
     while (*dato!='H' && *dato!='E' && *dato!='B' && *dato!='T')
     {
         printf("Error. Reingrese: ");
         fflush(stdin);
         scanf("%c", dato);
+        toupper(*dato);
     }
 }
 
