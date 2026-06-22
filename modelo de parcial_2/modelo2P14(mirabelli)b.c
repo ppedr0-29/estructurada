@@ -13,4 +13,39 @@ Además, se necesita determinar e informar:
 El nombre del empleado que cobra el máximo sueldo actualizado, en caso de ser más de uno mostrar el último.
 El importe total a pagar por cada categoría (resolver en una función).
 Validar todos los datos que ingresan por teclado según lo indicado.
-El código debe estar correctamente identado.*/
+El código debe estar correctamente identado.
+
+abrir archivo r+b
+ingreso codEmp
+while(codEmp!=FIN){
+    ingreso canthoras=leeyval(0, 168)
+    pos=busqueda()
+    if(pos!=-1){
+        sueldo=(imp *cant)
+        i=indice()
+        impTotal[i]+=sueldo;
+        fseek(pos)
+        fwrite(arch)
+        fflush(arch)
+    }else{
+        fwrite(archE, 0, seek_end);
+    }
+}
+maximo();
+
+maximo(){
+abrir archivo rb
+    auxnombre[]
+    fread(arch)
+    maximo=sueldo
+    strcpy(auxnombre,nombre)
+    while(!feof){
+        if(sueldo>=max){
+            max=sueldo
+            strcpy(auxnombre,nombre)
+        }
+            fread();
+    }
+    printf
+}
+*/

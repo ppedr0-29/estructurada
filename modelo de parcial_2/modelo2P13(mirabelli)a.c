@@ -15,6 +15,7 @@ Código de artículo
 Cantidad
 Si ya hay un registro previo en dicho archivo de errores con el mismo artículo debe incrementarse la cantidad. 
 Informar al final la cantidad de artículos actualizados y la cantidad de errores utilizando la función INFORME.
+<<<<<<< HEAD
 Validar todos los datos que ingresan por teclado según lo indicado.*/
 #include <stdio.h>
 #include <stdlib.h>
@@ -172,3 +173,8 @@ void Errores(ERROR errores){
         fflush(arch);
     }
 }
+=======
+Validar todos los datos que ingresan por teclado según lo indicado.
+
+*/
+>>>>>>> 6a73fdfdf9c8796693a0893d1588395e8fbca4c9
